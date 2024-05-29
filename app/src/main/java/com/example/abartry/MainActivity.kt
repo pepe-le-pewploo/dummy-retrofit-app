@@ -2,6 +2,7 @@ package com.example.abartry
 
 import android.os.Bundle
 import android.util.Log
+import android.view.PixelCopy.Request
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.abartry.RetrofitStuffs.MyApiService
 import com.example.abartry.RetrofitStuffs.ServiceBuilder
 import com.example.abartry.data.ApiResponse
+import com.example.abartry.data.RequestParameters
 import com.example.abartry.ui.theme.AbarTryTheme
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,8 +68,15 @@ fun HomeScreen() {
 }
 
 fun submit() {
+    val requestParameters = RequestParameters(
+        appId = "APP_118838",
+        password = "cab1c32cdbe7b1489ec6048e33296a43",
+        mobile = "8801631700392"
+    )
+
+
     val destinationService = ServiceBuilder.buildService(MyApiService::class.java)
-    val requestCall = destinationService.requestOtp()
+    val requestCall = destinationService.requestOtp(requestParameters)
 
     requestCall.enqueue(object : Callback<ApiResponse> {
         override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
