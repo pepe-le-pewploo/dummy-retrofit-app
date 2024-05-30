@@ -9,9 +9,17 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -24,7 +32,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.abartry.RetrofitStuffs.MyApiService
 import com.example.abartry.RetrofitStuffs.ServiceBuilder
 import com.example.abartry.data.ApiResponse
@@ -56,44 +66,45 @@ fun HomeScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        OutlinedTextField(value = value, onValueChange = {value = it},
-            colors = OutlinedTextFieldDefaults.colors(Color.Black)
-            )
-        Button(onClick = {
-            submit()
-        }) {
-            Text(text = "Submit")
+        OutlinedTextField(
+            value = value,
+            onValueChange = {value = it},
+            colors = OutlinedTextFieldDefaults.colors(Color.Black),
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Phone,
+                    contentDescription = "Phone number"
+                )
+            },
+            label = { Text("Enter OTP") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+            modifier = Modifier
+                .fillMaxWidth(9/11f)
+                .padding(10.dp)
+
+        )
+        Row(modifier = Modifier
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = {
+                submit()
+            }, modifier = Modifier.width(130.dp)
+                ) {
+                Text(text = "Submit")
+            }
+
+            Button(onClick = {
+                verify(value)
+            },modifier = Modifier.width(130.dp)) {
+                Text(text = "Verify")
+            }
         }
     }
 }
 
-fun submit() {
-    val requestParameters = RequestParameters(
-        appId = "APP_118838",
-        password = "cab1c32cdbe7b1489ec6048e33296a43",
-        mobile = "8801631700392"
-    )
 
-
-    val destinationService = ServiceBuilder.buildService(MyApiService::class.java)
-    val requestCall = destinationService.requestOtp(requestParameters)
-
-    requestCall.enqueue(object : Callback<ApiResponse> {
-        override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
-            if (response.isSuccessful) {
-                val apiResponse = response.body()
-                Log.d("MyActivity", "OTP sent successfully: $apiResponse")
-            } else {
-                // Handle unsuccessful response
-                Log.e("MyActivity", "Failed to send OTP: ${response.errorBody()?.string()}")
-            }
-        }
-        override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-            // Handle failure
-            Log.e("MyActivity", "Network error: ${t.message}")
-        }
-    })
-}
 
 @Preview(showBackground = true)
 @Composable
