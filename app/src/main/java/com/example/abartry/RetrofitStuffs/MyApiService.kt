@@ -7,6 +7,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface MyApiService {
-    @POST("subscription/otp/request")
+    @POST("nazmul/subscription/otp/request")
     fun requestOtp(@Body requestParameters: RequestParameters): Call<ApiResponse>
 }
