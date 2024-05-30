@@ -1,4 +1,4 @@
-package com.example.abartry.data
+package com.example.abartry.data.otpRequest
 
 data class ApiResponse(
     val statusCode: String,

@@ -3,8 +3,8 @@ package com.example.abartry
 import android.util.Log
 import com.example.abartry.RetrofitStuffs.MyApiService
 import com.example.abartry.RetrofitStuffs.ServiceBuilder
-import com.example.abartry.data.ApiResponse
-import com.example.abartry.data.RequestParameters
+import com.example.abartry.data.otpRequest.ApiResponse
+import com.example.abartry.data.otpRequest.RequestParameters
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

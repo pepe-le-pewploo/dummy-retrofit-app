@@ -1,9 +1,6 @@
 package com.example.abartry
 
 import android.os.Bundle
-import android.util.Log
-import android.view.PixelCopy.Request
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -22,7 +18,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,14 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.abartry.RetrofitStuffs.MyApiService
-import com.example.abartry.RetrofitStuffs.ServiceBuilder
-import com.example.abartry.data.ApiResponse
-import com.example.abartry.data.RequestParameters
 import com.example.abartry.ui.theme.AbarTryTheme
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,13 +80,45 @@ fun HomeScreen() {
                 submit()
             }, modifier = Modifier.width(130.dp)
                 ) {
-                Text(text = "Submit")
+                Text(text = "Request")
             }
 
             Button(onClick = {
                 verify(value)
             },modifier = Modifier.width(130.dp)) {
                 Text(text = "Verify")
+            }
+        }
+
+        Row(modifier = Modifier
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = {
+                subscriptionOn()
+            }, modifier = Modifier.width(130.dp)
+            ) {
+                Text(text = "Subscribe")
+            }
+
+            Button(onClick = {
+                subscriptionOff()
+            },modifier = Modifier.width(130.dp)) {
+                Text(text = "Unsubscribe")
+            }
+        }
+
+        Row(modifier = Modifier
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = {
+                verifyStatus()
+            }, modifier = Modifier.width(130.dp)
+            ) {
+                Text(text = "Status")
             }
         }
     }

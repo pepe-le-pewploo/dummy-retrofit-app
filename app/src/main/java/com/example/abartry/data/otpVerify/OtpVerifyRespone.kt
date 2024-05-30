@@ -1,4 +1,4 @@
-package com.example.abartry.data
+package com.example.abartry.data.otpVerify
 
 data class OtpVerifyRespone(
     val statusCode: String,
